@@ -1,15 +1,42 @@
 \usepackage{srcltx}
-\usepackage{epsfig}
+% \usepackage{epsfig}
 \usepackage{graphicx,amssymb,amsmath,amsthm}
-\usepackage{graphicx,color,enumerate}
-\usepackage[rflt]{floatflt}
+\usepackage{enumerate,setspace}
+% \usepackage[rflt]{floatflt}
+\usepackage{float}
 \usepackage{rotating}
-\usepackage{caption2}
-\usepackage{cases}
+% \usepackage{caption2}
+\usepackage[font={footnotesize},labelfont={bf},singlelinecheck=false,labelsep=period]{caption}
+\usepackage{afterpage}
+% \usepackage{cases}
 \usepackage{mathrsfs}
 \usepackage{amsfonts}
 \usepackage{multicol}
-\usepackage{pstricks}
+% \usepackage{pstricks}
+
+% For references
+\usepackage[
+    backend=biber,
+    style=nature,
+    date=year,
+    sorting=none,
+    maxbibnames=6,
+    giveninits=true,
+    doi=false,
+    url=false,
+    eprint=false,
+    isbn=false,
+]{biblatex}
+\AtEveryBibitem{\clearfield{urldate}}
+\AtEveryBibitem{\clearfield{issue}}
+\AtEveryBibitem{\clearfield{note}} 
+\AtEveryBibitem{\clearfield{language}\clearlist{language}} 
+
+\captionsetup[figure]{font={stretch=1.0}}
+\raggedbottom
+% https://stackoverflow.com/a/643688/2803344
+% \captionsetup{singlelinecheck=false,labelsep=period,font=footnotesize,labelfont={bf}}
+\addbibresource{bibliography.bib}
 
 
 \topmargin 20mm      % the top margin is not less than 2 cm
@@ -45,7 +72,7 @@
 
 	for the degree of}
 
-	{\normalsize \ndegree}
+	{\bf \normalsize \ndegree}
 
 	\vspace*{3.5cm}
 
@@ -54,8 +81,9 @@
 
 	{\bf \nsupervisor \space (Hong Kong Baptist University)}
 
-	\vspace*{2cm}
-	{\normalsize \ndate}
+	\vspace*{2.5cm}
+    
+	{\bf \normalsize \ndate}
 
 	\thispagestyle{empty}
 \end{center}
@@ -64,9 +92,9 @@
 
 \newcommand{\thesis}
 {
-\newpage
-\pagenumbering{arabic} \setcounter{chapter}{0}
-\setcounter{section}{0} \setcounter{page}{1} 
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1} 
 }
 
 \makeatletter

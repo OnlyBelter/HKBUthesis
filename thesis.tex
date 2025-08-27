@@ -1,70 +1,129 @@
+\pdfminorversion=7
 \documentclass[12pt,twoside]{report}
 \input{thesistemplate}
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
 \usepackage{multirow}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage[nottoc]{tocbibind}
+\usepackage{seqsplit}
+
+% it modifies all chapter titles at once
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\normalfont\bfseries\filcenter}{\huge\chaptertitlename\ \thechapter}{1ex}{\Huge}
+
+% For quotes
+\usepackage[english]{babel}
+\usepackage[autostyle, english = american]{csquotes}
+\usepackage{float}
+\MakeOuterQuote{"}
+% remove the box for each link and set the color
+\usepackage{xcolor}
+
+\usepackage[protrusion=true,expansion=true]{microtype}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+ % add a “List of Abbreviations”
+\usepackage[acronym,nonumberlist,toc]{glossaries}
+\makeglossaries
+
+% Algorithm environment
+\newcommand{\hash}[1]{{\ttfamily\seqsplit{#1}}}
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 
-\begin{document}
-\pagestyle{plain}
+% For tables
+\usepackage{booktabs} % For professional-looking lines (\toprule, \midrule, \bottomrule)
+\usepackage{amsmath}  % For \text in math mode
+\usepackage{array}    % For fixed-width columns
+\usepackage{pdflscape}% For the landscape environment
+\usepackage{rotating} % For rotated table headers (\sideways)
+\usepackage{longtable} % For tables that span multiple pages
+\usepackage{threeparttable}% For table-specific footnotes
+
+\newcommand{\frontchapter}[2][]{%
+  \cleardoublepage
+  \phantomsection
+  \chapter*{#2}%
+  \if\relax\detokenize{#1}\relax
+    \addcontentsline{toc}{chapter}{#2}%
+  \else
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+}
+
+
 \author{LI Lei}
 \supervisor{Prof. SURNAME Name}
 
 \title{Natural Language Explanation for Recommendations and Beyond}
-\degree{\bf Doctor of Philosophy}
-\date{\bf May 2022}
-\Thesistitle 
+\degree{Doctor of Philosophy}
+\date{August 2025}
 
+\begin{document}
+\pagestyle{plain}
+
+\pagenumbering{roman}
+
+\Thesistitle
 
 \newpage
 \setcounter{page}{1}
 
-\chapter*{\centerline{ DECLARATION}}
+\frontchapter[DECLARATION]{DECLARATION}
+\input{declaration}
 
-I hereby declare that this thesis represents my own work which has been done after registration for the degree of PhD at Hong Kong Baptist University, and has not been previously included in a thesis or dissertation submitted to this or any other institution for a degree, diploma or other qualifications.
+\input{abbreviations}
 
-I have read the University's current research ethics guidelines, and accept responsibility for the conduct of the procedures in accordance with the University's Research Ethics Committee (REC). I have attempted to identify all the risks related to this research that may arise in conducting this research, obtained the relevant ethical and/or safety approval (where applicable), and acknowledged my obligations and the rights of the participants.
-
-\vskip 1cm
-
-\hfill Signature:$\underline{\hspace{4cm}}$
-
-\hfill May 2022
-\addcontentsline{toc}{chapter}{Declaration}
 \newpage
-\addcontentsline{toc}{chapter}{\bf Abstract}
-\chapter*{\centerline{ Abstract}}
+\phantomsection
+\addcontentsline{toc}{chapter}{ABSTRACT}
+\chapter*{ABSTRACT}
+\input{abstract}
 
-Your abstract
 
 \vspace{1cm}
 
 \noindent {\bf Keywords:} Explainable Recommendation, Explainable Artificial Intelligence, Recommender Systems
 
 \newpage
-\addcontentsline{toc}{chapter}{\bf Acknowledgments}
-\chapter*{\centerline{Acknowledgments}}
-
-I would like to thank Dr. Guozhong Li for the nice suggestion of making this template as well as the procedure open-source.
+\phantomsection
+\addcontentsline{toc}{chapter}{ACKNOWLEDGEMENTS}
+\chapter*{ACKNOWLEDGEMENTS}
+\input{acknowledgement}
 
 \newpage % Use this part to insert the table of contents
+\phantomsection
 \addcontentsline{toc}{chapter}{Table of Contents}
+\renewcommand*\contentsname{Table of Contents}
 \tableofcontents
 
 \newpage % Use this part to insert the list of table.
-\addcontentsline{toc}{chapter}{List of Tables}
+% \addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
 
 \newpage % Use this part to insert the list of figure.
-\addcontentsline{toc}{chapter}{List of Figures}
+% \addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
 
 \newpage % Use this part to insert the list of algorithm.
 \addcontentsline{toc}{chapter}{List of Algorithms}
 \listofalgorithms
 \addtocontents{loa}{\def\string\figurename{Algorithm}}
+
+\printglossary[
+  type=\acronymtype,
+  title=List of Abbreviations,
+  toctitle=List of Abbreviations
+]
 
 \thesis % This command is used to set the page number.
 \newpage
@@ -83,16 +142,19 @@ I would like to thank Dr. Guozhong Li for the nice suggestion of making this tem
 \input{chapter4}
 
 \newpage
-\addcontentsline{toc}{chapter}{Bibliography}
-\bibliographystyle{plain}
-\bibliography{bibliography}
+% \addcontentsline{toc}{chapter}{Bibliography}
+\printbibliography[heading=bibintoc, title={Bibliography}]
+% \bibliographystyle{plain}
+% \bibliography{bibliography}
 
 \newpage
+\phantomsection
 \addcontentsline{toc}{chapter}{List of Publications}
 \input{pub}
 
 \newpage
-\addcontentsline{toc}{chapter}{Curriculum Vitae}
+\phantomsection
+\addcontentsline{toc}{chapter}{CURRICULUM VITAE}
 \input{cv}
 
 \end{document}
